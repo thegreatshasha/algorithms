@@ -22,23 +22,25 @@ int hamming_distance(int bit1, int size1, int bit2, int size2, int n) {
 
 int maximum_hamming(int arr1[], int arr2[], int m, int n) {
   int currentmax = 0;
-  int currentnum = 1;
+  int currentnum = 0;
+  int flag = 0;
   
   for (int i = 0; i < m; i++) {
 
-    for (int j = 0; j < m && j != i; j++) {
+    for (int j = i+1; j < m ; j++) {
 
-      for (int k = 0; k < m && k != i && k != j; k++) {
+      for (int k = j+1; k < m ; k++) {
         int ij_dist = hamming_distance(arr1[i], arr2[i], arr1[j], arr2[j], n);
         int jk_dist = hamming_distance(arr1[j], arr2[j], arr1[k], arr2[k], n);
         int ki_dist = hamming_distance(arr1[k], arr2[k], arr1[i], arr2[i], n);
 
         int distance =  ij_dist + jk_dist + ki_dist;
+        int flag = 1;
         
-        //cout << i << j << "distance: " << ij_dist << endl;
-        //cout << j << k << "distance: " << jk_dist << endl;
-        //cout << k << i << "distance: " << ki_dist << endl;
-        //cout  << "distance: " << distance << endl << endl;
+        cout << i << j << "distance: " << ij_dist << endl;
+        cout << j << k << "distance: " << jk_dist << endl;
+        cout << k << i << "distance: " << ki_dist << endl;
+        cout  << "distance: " << distance << endl << endl;
 
         if (currentmax < distance) {
           currentmax = distance;
@@ -50,7 +52,6 @@ int maximum_hamming(int arr1[], int arr2[], int m, int n) {
       }
     }
   }
-  
   cout << currentnum;
 }
 
