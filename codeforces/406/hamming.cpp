@@ -37,10 +37,10 @@ int maximum_hamming(int arr1[], int arr2[], int m, int n) {
         int distance =  ij_dist + jk_dist + ki_dist;
         int flag = 1;
         
-        cout << i << j << "distance: " << ij_dist << endl;
-        cout << j << k << "distance: " << jk_dist << endl;
-        cout << k << i << "distance: " << ki_dist << endl;
-        cout  << "distance: " << distance << endl << endl;
+        //cout << i << j << "distance: " << ij_dist << endl;
+        //cout << j << k << "distance: " << jk_dist << endl;
+        //cout << k << i << "distance: " << ki_dist << endl;
+        //cout  << "distance: " << distance << endl << endl;
 
         if (currentmax < distance) {
           currentmax = distance;
