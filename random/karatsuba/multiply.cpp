@@ -120,11 +120,12 @@ int karatsuba(vector<int> num1, vector<int> num2, int num1_start, int num2_start
 
   int z3 = karatsuba(sub1, sub2, 0, 0, sub1.size() - 1, sub2.size() - 1);
 
-  int result = 10^n;
+  int result = pow(10, n) * z1 + pow(10, n/2) * (z3 - z1 - z2) + z2;
 
   // pad zeroes
 
   printf("sub vector1 is: %s, sub vector 2 is: %s\n", print_vector(sub1, 0, sub1.size()-1).c_str(), print_vector(sub2, 0, sub2.size()-1).c_str());
+  return result;
 
   //printf("z1: %d z2: %d\n", z1, z2);
 }
@@ -141,7 +142,8 @@ int main() {
   num1_vec = pad_zeros(num1_vec, n);
   num2_vec = pad_zeros(num2_vec, n);
 
-  karatsuba(num1_vec, num2_vec, 0, 0, num1_vec.size()-1, num2_vec.size()-1);
+  result = karatsuba(num1_vec, num2_vec, 0, 0, num1_vec.size()-1, num2_vec.size()-1);
+  printf("final-result; %d\n", result);
   
   // statistical assertion testing here
   //assert(1==2);
