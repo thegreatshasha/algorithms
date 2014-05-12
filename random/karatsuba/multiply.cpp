@@ -129,7 +129,7 @@ int karatsuba(vector<int> num1, vector<int> num2, int num1_start, int num2_start
   int z2 = karatsuba(num1, num2, num1_start+midright, num2_start+midright, num1_end, num2_end);
   int z3 = karatsuba(sub1, sub2, 0, 0, sub1.size() - 1, sub2.size() - 1);
 
-  int result = pow(10, ((n/2)*2)) * z1 + pow(10, n/2) * (z3 - z1 - z2) + z2;
+  long int result = pow(10, ((n/2)*2)) * z1 + pow(10, n/2) * (z3 - z1 - z2) + z2;
 
   // pad zeroes
 
