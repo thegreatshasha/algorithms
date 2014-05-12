@@ -33,6 +33,9 @@ vector<int> num_to_vec(int num) {
 }
 
 vector<int> pad_zeros(vector<int> num, int length) {
+  if (length % 2 != 0 && length > 1)
+    length += 1;
+
   if(num.size() < length) {
     while(num.size() < length) {
       num.insert(num.begin(), 0);
@@ -68,33 +71,30 @@ int karatsuba(vector<int> num1, vector<int> num2, int num1_start, int num2_start
   if(num1_start==num1_end && num2_start==num2_end)
     return num1[num1_start] * num2[num2_start];
 
-  int n = max( num1_end-num1_start , num2_end - num2_start) + 1;
+  int n = max( num1_end-num1_start , num2_end - num2_start);
 
   // pad zeros and print vectors
   
-  int mid = n/2 - 1;
-  int len = n - mid - 1;
-
+  int mid = n/2;
+  
   // call karatsuba again
   printf("n: %d mid: %d\n", n, mid);
-
-  int z1 = karatsuba(num1, num2, num1_start, num2_start, num1_start+mid, num2_start+mid);
-  int z2 = karatsuba(num1, num2, num1_start+mid+1, num2_start+mid+1, num1_end, num2_end);
 
   // calculate the third vector. Make this a separate routine
   vector<int> sub1, sub2;
 
   int carry1 = 0, carry2 = 0;
   
-  for(int i=n-1; i>mid; i--) {
+  printf("subvector calc: from: %d to: %d\n", n, mid+1);
+  for(int i=n; i>mid; i--) {
+    printf("  %d corresponds to %d\n", i, i - mid -1);
     int n1 = num1[i];
-    int n2 = i-len >=0 ? num1[i-len] : 0;
+    int n2 = i-mid-1 >=0 ? num1[i-mid-1] : 0;
 
     int n3 = num2[i];
-    int n4 = i-len >=0 ? num2[i-len] : 0;
+    int n4 = i-mid-1 >=0 ? num2[i-mid-1] : 0;
     
-    printf("add: %d + %d \n", n1, n2);
-    printf("corresponding: \n");
+    //printf("add: %d + %d \n", n1, n2);
     
     int rez1 = n1 + n2 + carry1;
     int rez2 = n3 + n4 + carry2;
@@ -118,13 +118,17 @@ int karatsuba(vector<int> num1, vector<int> num2, int num1_start, int num2_start
   sub1 = pad_zeros(sub1, max(sub1.size(), sub2.size()));
   sub2 = pad_zeros(sub2, max(sub1.size(), sub2.size()));
 
+  printf("sub vector1 is: %s, sub vector 2 is: %s\n\n", print_vector(sub1, 0, sub1.size()-1).c_str(), print_vector(sub2, 0, sub2.size()-1).c_str());
+
+  int z1 = karatsuba(num1, num2, num1_start, num2_start, num1_start+mid, num2_start+mid);
+  int z2 = karatsuba(num1, num2, num1_start+mid+1, num2_start+mid+1, num1_end, num2_end);
   int z3 = karatsuba(sub1, sub2, 0, 0, sub1.size() - 1, sub2.size() - 1);
 
-  int result = pow(10, n) * z1 + pow(10, n/2) * (z3 - z1 - z2) + z2;
+  int result = pow(10, n) * z1 + pow(10, (n+1)/2) * (z3 - z1 - z2) + z2;
 
   // pad zeroes
 
-  printf("sub vector1 is: %s, sub vector 2 is: %s\n", print_vector(sub1, 0, sub1.size()-1).c_str(), print_vector(sub2, 0, sub2.size()-1).c_str());
+  
   return result;
 
   //printf("z1: %d z2: %d\n", z1, z2);
