@@ -11,6 +11,8 @@
 
 using namespace std;
 
+long int inversion_count = 0;
+
 int length(int num) {
   return floor(log10(abs(num))) + 1;
 }
@@ -70,8 +72,7 @@ int merge(vector<int> &num, int start1, int end1, int start2, int end2, int leve
 	
 	//print_space(level);
 	//printf("%d, %d, %d, %d\n", start1, end1, start2, end2);
-	
-	int count = 0, length = end2 + end1 - start2 - start1 + 2;
+  int count = 0, length = end2 + end1 - start2 - start1 + 2;
 	int left = start1;
 	int temp[length];
 
@@ -79,7 +80,10 @@ int merge(vector<int> &num, int start1, int end1, int start2, int end2, int leve
 	//printf("succesffully entering %d\n", level);
 
 	while(start1 <= end1 && start2 <= end2) {
+    //printf("comparing: %d and %d\n", num[start1], num[start2]);
 		if(num[start1] > num[start2]) {
+      //printf("%d > %d, adding: %d\n", num[start1], num[start2], end1 - start1 + 1);
+      inversion_count += end1 - start1 + 1;
 			temp[count++] = num[start2++];
 		}else{
 			temp[count++] = num[start1++];
@@ -101,6 +105,7 @@ int merge(vector<int> &num, int start1, int end1, int start2, int end2, int leve
 
 	//print_space(level);
 	//printf("succesffully returning from: %d\n", level);
+  return inversion_count;
 
 }
 
@@ -108,7 +113,6 @@ int sort(vector<int> &num, int start, int end, int level) {
   /*for(int i=0; i<=level; i++) {
   	//printf("\t");
   }*/
-
   //printf("%s\n", //print_vector(num, start, end).c_str());
 
   if(start == end)
@@ -172,11 +176,13 @@ vector<int> read_numbers() {
 }
 
 int main() {
-  vector<int> num = read_numbers();
+  //vector<int> num = read_numbers();
+  vector<int> num = num_to_vec(987654321);  
 
   sort(num, 0, num.size()-1, 0);
+  printf("inversions_count: %d\n", inversion_count);
 
-  printf("%s: %d\n", print_vector(num, 0, 1000).c_str(), num.size());
+  //printf("%s: %d\n", print_vector(num, 0, 1000).c_str(), num.size());
   // statistical assertion testing here
   //assert(1==2);
 }
