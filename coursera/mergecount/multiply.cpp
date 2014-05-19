@@ -6,6 +6,7 @@
 # include <assert.h>
 # include <string>
 # include <sstream>
+# include <fstream>
 
 
 using namespace std;
@@ -153,18 +154,29 @@ int statistical_tests(int n=100) {
   
 }
 
+vector<int> read_numbers() {
+  vector<int> mynum;
+
+  ifstream iFile("IntegerArray.txt");        // input.txt has integers, one per line
+  
+  int x;
+
+  while (iFile >> x) 
+  {
+      //cerr << x << endl;
+      //printf("%d\n", x);
+      mynum.insert(mynum.begin(), x);
+  }
+
+  return mynum;
+}
+
 int main() {
-  //int num1, num2, result;
-  //cin >> num1 >> num2;
-  vector<int> num = num_to_vec(96187);	
+  vector<int> num = read_numbers();
 
   sort(num, 0, num.size()-1, 0);
 
-  printf("%s: %d\n", print_vector(num, 0, num.size() - 1).c_str(), num.size());
-  //merge(num, 0, 0, 1, 4, 0);
-
-  //////printf("final-result; %d\n", result);
-  
+  printf("%s: %d\n", print_vector(num, 0, 1000).c_str(), num.size());
   // statistical assertion testing here
   //assert(1==2);
 }
