@@ -272,7 +272,7 @@ int quick_sort(vector<int> &num, int start, int end, int level) {
       swap(num, i+1, j);
 
       print_level(level);
-      printf("%s\n", print_vector(num, start, end).c_str());
+      printf("%s. pivot_pos: %d\n", print_vector(num, start, end).c_str(), i+1);
       i++;
     }
   }
