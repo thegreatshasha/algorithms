@@ -243,7 +243,7 @@ int quick_sort(vector<int> &num, int start, int end, int level) {
   }*/
 
   print_level(level);
-  printf("vector: %s\n", print_vector(num, start, end).c_str());
+  printf("%s\n", print_vector(num, start, end).c_str());
   
   print_level(level);
   printf("start: %d, end: %d, level: %d\n", start, end, level);
@@ -256,28 +256,34 @@ int quick_sort(vector<int> &num, int start, int end, int level) {
 
   comparison_count = comparison_count + BigInteger(end - start);  
 
+  // n gives actual length. rest everything is just diff
+  int n = end - start + 1;
+
+  // what if mid
+
   // pad zeros and //print vectors
-  int pivot_pos = start+2;
-  int pivot_val = num[pivot_pos];
+  int pivot_val = num[end];
   int i = start;
 
-  for(int j=start; j<=end; j++) {
-    print_level(level);
-    printf("comparing %d[%d]-%d[%d]\n", pivot_val, i, num[j], j);
+  print_level(level);
+  
+  for(int j=start; j<end; j++) {
+    //print_level(level);
+    //printf("comparing %d-%d\n", num[i], num[j]);
 
     if (num[j] < pivot_val) {
       print_level(level);
-      printf("Swapping: %d[%d]-%d[%d]\n", num[i+1], i+1, num[j], j);
+      printf("Swapping: %d->%d\n", i, j);
       
-      swap(num, i+1, j);
+      swap(num, i, j);
 
       print_level(level);
-      printf("%s. pivot_pos: %d\n", print_vector(num, start, end).c_str(), i+1);
+      printf("%s\n", print_vector(num, start, end).c_str());
       i++;
     }
   }
 
-  swap(num, i, pivot_pos);
+  swap(num, i, end);
   print_level(level);
   printf("%s\n\n", print_vector(num, start, end).c_str());
 
