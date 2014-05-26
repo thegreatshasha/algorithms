@@ -257,7 +257,7 @@ int quick_sort(vector<int> &num, int start, int end, int level) {
   comparison_count = comparison_count + BigInteger(end - start);  
 
   // pad zeros and //print vectors
-  int pivot_pos = start+0;
+  int pivot_pos = start+2;
   int pivot_val = num[pivot_pos];
   int i = start;
 
