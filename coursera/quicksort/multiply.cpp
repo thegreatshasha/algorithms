@@ -259,14 +259,14 @@ int quick_sort(vector<int> &num, int start, int end, int level) {
   // n gives actual length. rest everything is just diff
   int n = end - start + 1;
 
-  // what if mid
+  // swap pivot position with end
+  int pivot_pos = end;
+  swap(num, pivot_pos, end);
 
   // pad zeros and //print vectors
   int pivot_val = num[end];
   int i = start;
 
-  print_level(level);
-  
   for(int j=start; j<end; j++) {
     //print_level(level);
     //printf("comparing %d-%d\n", num[i], num[j]);
