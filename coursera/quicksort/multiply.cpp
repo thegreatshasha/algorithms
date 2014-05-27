@@ -237,6 +237,10 @@ int print_level(int level) {
   	}
 }
 
+int median_pos(vector<int> &num, int start, int end) {
+  return (end - start)/2;
+}
+
 int quick_sort(vector<int> &num, int start, int end, int level) {
   /*for(int i=0; i<=level; i++) {
   	//////printf("\t");
@@ -265,7 +269,7 @@ int quick_sort(vector<int> &num, int start, int end, int level) {
   cout << end - start << endl;
   
   // swap pivot position with end
-  int pivot_pos = end;
+  int pivot_pos = start + median_pos(num, start, end);
   swap(num, pivot_pos, start);
 
   // pad zeros and //print vectors
@@ -316,7 +320,7 @@ int statistical_tests(int n=100) {
 vector<int> read_numbers() {
   vector<int> mynum;
 
-  ifstream iFile("100.txt");        // input.txt has integers, one per line
+  ifstream iFile("10.txt");        // input.txt has integers, one per line
   
   int x;
 
@@ -335,9 +339,9 @@ int main() {
   //////printf("%s: %d\n", print_vector(num, 0, num.size() - 1).c_str(), num.size());
   //vector <int> num = num_to_vec(1234);  
 
-  //swap(num, 0, 1);
-  quick_sort(num, 0, num.size()-1, 0);
   //////printf("inversions_count: %d\n", inversion_count);
+  quick_sort(num, 0, num.size()-1, 0);
+  
   cout << comparison_count << endl;
 
   printf("%s: %d\n", print_vector(num, 0, num.size() - 1).c_str(), num.size());
