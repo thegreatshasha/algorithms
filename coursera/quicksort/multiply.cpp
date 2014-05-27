@@ -245,8 +245,8 @@ int quick_sort(vector<int> &num, int start, int end, int level) {
   print_level(level);
   printf("%s\n", print_vector(num, start, end).c_str());
   
-  print_level(level);
-  printf("start: %d, end: %d, level: %d\n", start, end, level);
+  /*print_level(level);
+  printf("start: %d, end: %d, level: %d\n", start, end, level);*/
 
   if(start >= end){
     print_level(level);
@@ -254,13 +254,16 @@ int quick_sort(vector<int> &num, int start, int end, int level) {
     return 0;
   }
 
-  comparison_count = comparison_count + BigInteger(end - start);  
-
+  comparison_count = comparison_count + BigInteger(end - start); 
+  print_level(level);
+  printf("adding comparisons: ");
+  cout << comparison_count << endl;
+  
   // n gives actual length. rest everything is just diff
   int n = end - start + 1;
 
   // swap pivot position with end
-  int pivot_pos = end;
+  int pivot_pos = start;
   swap(num, pivot_pos, end);
 
   // pad zeros and //print vectors
@@ -272,13 +275,13 @@ int quick_sort(vector<int> &num, int start, int end, int level) {
     //printf("comparing %d-%d\n", num[i], num[j]);
 
     if (num[j] < pivot_val) {
-      print_level(level);
-      printf("Swapping: %d[%d]-%d[%d]\n", num[i], i, num[j], j);
+      /*print_level(level);
+      printf("Swapping: %d[%d]-%d[%d]\n", num[i], i, num[j], j);*/
       
       swap(num, i, j);
 
-      print_level(level);
-      printf("%s\n", print_vector(num, start, end).c_str());
+      /*print_level(level);
+      printf("%s\n", print_vector(num, start, end).c_str());*/
       i++;
     }
   }
@@ -289,14 +292,14 @@ int quick_sort(vector<int> &num, int start, int end, int level) {
 
   // now do the recursive calls
   print_level(level);
-  printf("calling quickrort from %d..%d, %d..%d. pivot: %d[%d]\n", start, i-1, i+1, end, num[i], i);
+  printf("calling quickrort from %d[%d]..%d[%d], %d[%d]..%d[%d]. pivot: %d[%d]\n", num[start], start, num[i-1], i-1, num[i+1], i+1, num[end], end, num[i], i);
   
   quick_sort(num, start, i - 1, level+1);
   quick_sort(num, i+1, end, level+1);
   
   //////printf("mid: %d, left1: %d, right1: %d, left2: %d, right2: %d, len: %d\n", mid, start, start + midleft, midright, end, len);
-  print_level(level);
-  printf("exiting\n\n");
+  /*print_level(level);
+  printf("exiting\n\n");*/
   return 0;
 
   //////////printf("z1: %d z2: %d\n", z1, z2);
