@@ -273,7 +273,7 @@ int quick_sort(vector<int> &num, int start, int end, int level) {
 
     if (num[j] < pivot_val) {
       print_level(level);
-      printf("Swapping: %d->%d\n", i, j);
+      printf("Swapping: %d[%d]-%d[%d]\n", num[i], i, num[j], j);
       
       swap(num, i, j);
 
