@@ -241,9 +241,11 @@ int quick_sort(vector<int> &num, int start, int end, int level) {
   /*for(int i=0; i<=level; i++) {
   	//////printf("\t");
   }*/
+  print_level(level);
+  printf("{\n\n");
 
   print_level(level);
-  printf("%s\n", print_vector(num, start, end).c_str());
+  printf("%s: %d\n", print_vector(num, start, end).c_str(), end - start + 1);
   
   /*print_level(level);
   printf("start: %d, end: %d, level: %d\n", start, end, level);*/
@@ -251,26 +253,26 @@ int quick_sort(vector<int> &num, int start, int end, int level) {
   if(start >= end){
     print_level(level);
     printf("base case. exiting\n\n");
+
+    print_level(level);
+    printf("}\n\n");
     return 0;
   }
 
   comparison_count = comparison_count + BigInteger(end - start); 
   print_level(level);
   printf("adding comparisons: ");
-  cout << BigInteger(end - start) << endl;
+  cout << end - start << endl;
   
-  // n gives actual length. rest everything is just diff
-  int n = end - start + 1;
-
   // swap pivot position with end
-  int pivot_pos = start;
-  swap(num, pivot_pos, end);
+  int pivot_pos = end;
+  swap(num, pivot_pos, start);
 
   // pad zeros and //print vectors
-  int pivot_val = num[end];
-  int i = start;
+  int pivot_val = num[start];
+  int i = start+1;
 
-  for(int j=start; j<end; j++) {
+  for(int j=start+1; j<=end; j++) {
     //print_level(level);
     //printf("comparing %d-%d\n", num[i], num[j]);
 
@@ -286,20 +288,22 @@ int quick_sort(vector<int> &num, int start, int end, int level) {
     }
   }
 
-  swap(num, i, end);
+  swap(num, i-1, start);
   print_level(level);
-  printf("%s\n\n", print_vector(num, start, end).c_str());
+  printf("%s: %d\n", print_vector(num, start, end).c_str(), end - start + 1);
 
   // now do the recursive calls
   print_level(level);
-  printf("calling quickrort from %d[%d]..%d[%d], %d[%d]..%d[%d]. pivot: %d[%d]\n", num[start], start, num[i-1], i-1, num[i+1], i+1, num[end], end, num[i], i);
+  printf("calling quickrort from %d[%d]..%d[%d], %d[%d]..%d[%d]. pivot: %d[%d]\n", num[start], start, num[i-2], i-2, num[i], i, num[end], end, num[i-1], i-1);
   
-  quick_sort(num, start, i - 1, level+1);
-  quick_sort(num, i+1, end, level+1);
+  quick_sort(num, start, i - 2, level+1);
+  quick_sort(num, i, end, level+1);
   
   //////printf("mid: %d, left1: %d, right1: %d, left2: %d, right2: %d, len: %d\n", mid, start, start + midleft, midright, end, len);
   /*print_level(level);
   printf("exiting\n\n");*/
+  print_level(level);
+  printf("}\n\n");
   return 0;
 
   //////////printf("z1: %d z2: %d\n", z1, z2);
@@ -312,7 +316,7 @@ int statistical_tests(int n=100) {
 vector<int> read_numbers() {
   vector<int> mynum;
 
-  ifstream iFile("10.txt");        // input.txt has integers, one per line
+  ifstream iFile("100.txt");        // input.txt has integers, one per line
   
   int x;
 
