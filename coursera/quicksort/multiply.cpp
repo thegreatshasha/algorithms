@@ -257,7 +257,7 @@ int quick_sort(vector<int> &num, int start, int end, int level) {
   comparison_count = comparison_count + BigInteger(end - start); 
   print_level(level);
   printf("adding comparisons: ");
-  cout << comparison_count << endl;
+  cout << BigInteger(end - start) << endl;
   
   // n gives actual length. rest everything is just diff
   int n = end - start + 1;
