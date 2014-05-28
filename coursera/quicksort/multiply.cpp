@@ -166,24 +166,33 @@ ostream& operator<<(ostream& in, BigInteger& integer) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*
+ * Main program begins here
+ */
 
 BigInteger comparison_count = 0;
-//BigInteger inv_count = 0;
 
+/*
+ * Method declarations
+ */
+
+int median_pos(vector<int> &num, int start, int end, int level);
+int quick_sort(vector<int> &num, int start, int end, int level, int strategy);
+int swap(vector<int> &num, int i, int j);
+int print_level(int level);
+int choose_strategy(vector<int> &num, int start, int end, int level, int strategy);
+int statistical_tests(int n);
+int length(int num);
+
+string convertInt(int number);
+string print_vector(vector<int> num, int start, int end);
+
+vector<int> num_to_vec(int num);
+vector<int> read_numbers();
+
+/*
+ * Method definitions
+ */
 int length(int num) {
   return floor(log10(abs(num))) + 1;
 }
@@ -231,17 +240,54 @@ int swap(vector<int> &num, int i, int j) {
 	num[j] = temp;
 }
 
+int swap_arr(int num[], int i, int j) {
+  int temp = num[i];
+  num[i] = num[j];
+  num[j] = temp;
+}
+
 int print_level(int level) {
 	for(int i=0; i<=level; i++) {
   		printf("\t");
   	}
 }
 
-int median_pos(vector<int> &num, int start, int end) {
-  return (end - start)/2;
+int median_pos(vector<int> &num, int start, int end, int level) {
+  int mid = (end - start)/2;
+  
+  int arr[3] = {start, start+mid, end};
+
+  for(int i=0; i<3; i++) {
+    for(int j=i+1; j<3; j++) {
+      if(num[arr[j]]<num[arr[i]]) {
+        swap_arr(arr, i, j);
+      }
+    }
+  }
+
+  return arr[1];
+
+  //return (end - start)/2;
 }
 
-int quick_sort(vector<int> &num, int start, int end, int level) {
+int choose_strategy(vector<int> &num, int start, int end, int level, int strategy) {
+  if(strategy == 0) {
+    return start;
+  }
+  else if(strategy == 1) {
+    return end;
+  }
+  else {
+    return median_pos(num, start, end, level);
+  }
+}
+
+void myprintf(char* fmt, ...)
+{
+    //printf(fmt,args);
+}
+
+int quick_sort(vector<int> &num, int start, int end, int level, int strategy) {
   /*for(int i=0; i<=level; i++) {
   	//////printf("\t");
   }*/
@@ -269,9 +315,10 @@ int quick_sort(vector<int> &num, int start, int end, int level) {
   cout << end - start << endl;
   
   // swap pivot position with end
-  int pivot_pos = start + median_pos(num, start, end);
+  
+  int pivot_pos = choose_strategy(num, start, end, level, strategy);
   swap(num, pivot_pos, start);
-
+  
   // pad zeros and //print vectors
   int pivot_val = num[start];
   int i = start+1;
@@ -294,14 +341,17 @@ int quick_sort(vector<int> &num, int start, int end, int level) {
 
   swap(num, i-1, start);
   print_level(level);
-  printf("%s: %d\n", print_vector(num, start, end).c_str(), end - start + 1);
+  printf("%s: %d. pivot: %d\n", print_vector(num, start, end).c_str(), end - start + 1, pivot_val);
 
   // now do the recursive calls
   print_level(level);
   printf("calling quickrort from %d[%d]..%d[%d], %d[%d]..%d[%d]. pivot: %d[%d]\n", num[start], start, num[i-2], i-2, num[i], i, num[end], end, num[i-1], i-1);
   
-  quick_sort(num, start, i - 2, level+1);
-  quick_sort(num, i, end, level+1);
+  quick_sort(num, start, i - 2, level+1, strategy);
+  quick_sort(num, i, end, level+1, strategy);
+
+  print_level(level);
+  printf("%s: %d. pivot: %d\n", print_vector(num, start, end).c_str(), end - start + 1, pivot_val);
   
   //////printf("mid: %d, left1: %d, right1: %d, left2: %d, right2: %d, len: %d\n", mid, start, start + midleft, midright, end, len);
   /*print_level(level);
@@ -337,10 +387,11 @@ vector<int> read_numbers() {
 int main() {
   vector<int> num = read_numbers();
   //////printf("%s: %d\n", print_vector(num, 0, num.size() - 1).c_str(), num.size());
-  //vector <int> num = num_to_vec(1234);  
+  //vector <int> num = num_to_vec(541231);  
 
   //////printf("inversions_count: %d\n", inversion_count);
-  quick_sort(num, 0, num.size()-1, 0);
+  quick_sort(num, 0, num.size()-1, 0, 1);
+  //cout << num[median_pos(num, 0, num.size() - 1, 0)] << endl;
   
   cout << comparison_count << endl;
 
