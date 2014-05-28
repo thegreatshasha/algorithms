@@ -218,16 +218,16 @@ string print_vector(vector<int> num, int start, int end) {
 vector<int> num_to_vec(int num) {
   vector<int> myint;
 
-  ////printf("%s\n", print_vector(myint, 0, myint.size() - 1).c_str());
+  //////printf"%s\n", print_vector(myint, 0, myint.size() - 1).c_str());
 
   while(num > 0) {
   	int toinsert = num%10;
-  	//////printf("Lets insert: %d\n", toinsert);
+  	////////printf"Lets insert: %d\n", toinsert);
     myint.insert(myint.begin(), num%10);
     num = num/10;
   }
 
-  ////printf("%s\n", print_vector(myint, 0, myint.size() - 1).c_str());
+  //////printf"%s\n", print_vector(myint, 0, myint.size() - 1).c_str());
 
   return myint;
 }
@@ -282,37 +282,32 @@ int choose_strategy(vector<int> &num, int start, int end, int level, int strateg
   }
 }
 
-void myprintf(char* fmt, ...)
-{
-    //printf(fmt,args);
-}
-
 int quick_sort(vector<int> &num, int start, int end, int level, int strategy) {
   /*for(int i=0; i<=level; i++) {
-  	//////printf("\t");
+  	////////printf"\t");
   }*/
-  print_level(level);
-  printf("{\n\n");
+  //print_level(level);
+  //printf"{\n\n");
 
-  print_level(level);
-  printf("%s: %d\n", print_vector(num, start, end).c_str(), end - start + 1);
+  //print_level(level);
+  //printf"%s: %d\n", print_vector(num, start, end).c_str(), end - start + 1);
   
-  /*print_level(level);
-  printf("start: %d, end: %d, level: %d\n", start, end, level);*/
+  /*//print_level(level);
+  //printf"start: %d, end: %d, level: %d\n", start, end, level);*/
 
   if(start >= end){
-    print_level(level);
-    printf("base case. exiting\n\n");
+    //print_level(level);
+    //printf"base case. exiting\n\n");
 
-    print_level(level);
-    printf("}\n\n");
+    //print_level(level);
+    //printf"}\n\n");
     return 0;
   }
 
   comparison_count = comparison_count + BigInteger(end - start); 
-  print_level(level);
-  printf("adding comparisons: ");
-  cout << end - start << endl;
+  //print_level(level);
+  //printf"adding comparisons: ");
+  //cout << end - start << endl;
   
   // swap pivot position with end
   
@@ -324,60 +319,74 @@ int quick_sort(vector<int> &num, int start, int end, int level, int strategy) {
   int i = start+1;
 
   for(int j=start+1; j<=end; j++) {
-    //print_level(level);
-    //printf("comparing %d-%d\n", num[i], num[j]);
+    ////print_level(level);
+    ////printf"comparing %d-%d\n", num[i], num[j]);
 
     if (num[j] < pivot_val) {
-      /*print_level(level);
-      printf("Swapping: %d[%d]-%d[%d]\n", num[i], i, num[j], j);*/
+      /*//print_level(level);
+      //printf"Swapping: %d[%d]-%d[%d]\n", num[i], i, num[j], j);*/
       
       swap(num, i, j);
 
-      /*print_level(level);
-      printf("%s\n", print_vector(num, start, end).c_str());*/
+      /*//print_level(level);
+      //printf"%s\n", print_vector(num, start, end).c_str());*/
       i++;
     }
   }
 
   swap(num, i-1, start);
-  print_level(level);
-  printf("%s: %d. pivot: %d\n", print_vector(num, start, end).c_str(), end - start + 1, pivot_val);
+  //print_level(level);
+  //printf"%s: %d. pivot: %d\n", print_vector(num, start, end).c_str(), end - start + 1, pivot_val);
 
   // now do the recursive calls
-  print_level(level);
-  printf("calling quickrort from %d[%d]..%d[%d], %d[%d]..%d[%d]. pivot: %d[%d]\n", num[start], start, num[i-2], i-2, num[i], i, num[end], end, num[i-1], i-1);
+  //print_level(level);
+  //printf"calling quickrort from %d[%d]..%d[%d], %d[%d]..%d[%d]. pivot: %d[%d]\n", num[start], start, num[i-2], i-2, num[i], i, num[end], end, num[i-1], i-1);
   
   quick_sort(num, start, i - 2, level+1, strategy);
   quick_sort(num, i, end, level+1, strategy);
 
-  print_level(level);
-  printf("%s: %d. pivot: %d\n", print_vector(num, start, end).c_str(), end - start + 1, pivot_val);
+  //print_level(level);
+  //printf"%s: %d. pivot: %d\n", print_vector(num, start, end).c_str(), end - start + 1, pivot_val);
   
-  //////printf("mid: %d, left1: %d, right1: %d, left2: %d, right2: %d, len: %d\n", mid, start, start + midleft, midright, end, len);
-  /*print_level(level);
-  printf("exiting\n\n");*/
-  print_level(level);
-  printf("}\n\n");
+  ////////printf"mid: %d, left1: %d, right1: %d, left2: %d, right2: %d, len: %d\n", mid, start, start + midleft, midright, end, len);
+  /*//print_level(level);
+  //printf"exiting\n\n");*/
+  //print_level(level);
+  //printf"}\n\n");
   return 0;
 
-  //////////printf("z1: %d z2: %d\n", z1, z2);
+  ////////////printf"z1: %d z2: %d\n", z1, z2);
 }
 
-int statistical_tests(int n=100) {
-  
+int statistical_tests() {
+  for(int strategy=0; strategy <=2; strategy++) {
+    
+    comparison_count = 0;
+    
+    vector<int> num = read_numbers();
+    ////////printf"%s: %d\n", print_vector(num, 0, num.size() - 1).c_str(), num.size());
+    //vector <int> num = num_to_vec(541231);  
+
+    ////////printf"inversions_count: %d\n", inversion_count);
+    quick_sort(num, 0, num.size()-1, 0, strategy);
+    //cout << num[median_pos(num, 0, num.size() - 1, 0)] << endl;
+    
+    printf("strategy: %d ", strategy);
+    cout << comparison_count << endl;
+  } 
 }
 
 vector<int> read_numbers() {
   vector<int> mynum;
 
-  ifstream iFile("10.txt");        // input.txt has integers, one per line
+  ifstream iFile("IntegerArray.txt");        // input.txt has integers, one per line
   
   int x;
 
   while (iFile >> x) 
   {
       //cerr << x << endl;
-      //////printf("%d\n", x);
+      ////////printf"%d\n", x);
       mynum.push_back(x);
   }
 
@@ -385,17 +394,18 @@ vector<int> read_numbers() {
 }
 
 int main() {
-  vector<int> num = read_numbers();
-  //////printf("%s: %d\n", print_vector(num, 0, num.size() - 1).c_str(), num.size());
+  //vector<int> num = read_numbers();
+  ////////printf"%s: %d\n", print_vector(num, 0, num.size() - 1).c_str(), num.size());
   //vector <int> num = num_to_vec(541231);  
 
-  //////printf("inversions_count: %d\n", inversion_count);
-  quick_sort(num, 0, num.size()-1, 0, 1);
+  ////////printf"inversions_count: %d\n", inversion_count);
+  //quick_sort(num, 0, num.size()-1, 0, 0);
   //cout << num[median_pos(num, 0, num.size() - 1, 0)] << endl;
   
-  cout << comparison_count << endl;
+  //cout << comparison_count << endl;
+  statistical_tests();
 
-  printf("%s: %d\n", print_vector(num, 0, num.size() - 1).c_str(), num.size());
+  //printf"%s: %d\n", print_vector(num, 0, num.size() - 1).c_str(), num.size());
   // statistical assertion testing here
   //assert(1==2);
 }
